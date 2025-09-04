@@ -1,0 +1,8 @@
+brainstorm ideas:
+1. tailscale network to host database and to link devices at 
+different locations as well to allow the database to be scaleable
+2. Allow costumers to place a hold on the website
+3. Track scales
+
+resource ideas:
+django: Easy authentication built in admin page and database

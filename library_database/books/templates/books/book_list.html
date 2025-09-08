@@ -8,7 +8,16 @@
     <ul>
         {% for book in books %}
             <li>
-                <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.published_year }})
+                {% if book.thumbnail_url %}
+                    <img src="{{ book.thumbnail_url }}" alt="{{ book.title }}" width="100">
+                {% endif %}
+                <strong>{{ book.title }}</strong> by {{ book.author }}<br>
+                {% if book.publisher %}Publisher: {{ book.publisher }}<br>{% endif %}
+                {% if book.published_year %}Published: {{ book.published_year }}<br>{% endif %}
+                {% if book.page_count %}Pages: {{ book.page_count }}<br>{% endif %}
+                {% if book.language %}Language: {{ book.language }}<br>{% endif %}
+                {% if book.categories %}Categories: {{ book.categories }}<br>{% endif %}
+                Copies: {{ book.copies }}
             </li>
         {% empty %}
             <li>No books found.</li>

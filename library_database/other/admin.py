@@ -3,7 +3,7 @@ from .models import OtherProduct, Movie
 
 @admin.register(Movie)
 class MoviesAdmin(admin.ModelAdmin):
-    list_display = ('title', 'upc', 'copies')
+    list_display = ('upc','title','copies')
     search_fields = ('title', 'upc')
 
 @admin.register(OtherProduct)

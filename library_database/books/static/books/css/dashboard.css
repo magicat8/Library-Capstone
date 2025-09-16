@@ -18,9 +18,9 @@
 
 /* RECENT ACTIONS MODULE */
 
-#recent-actions-module.module {
-    background-color: rgb(87, 0, 0);
-}
+/* #recent-actions-module.module {
+
+} */
 
 .module ul.actionlist {
     margin-left: 0;

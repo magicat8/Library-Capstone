@@ -13,7 +13,10 @@ class Book(models.Model):
     categories = models.CharField(max_length=200, blank=True, null=True)
     isbn = models.CharField(max_length=20, null=True, blank=True)
     copies = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    hardback_copies = models.PositiveIntegerField(default=0)
+    papperback_copies = models.PositiveIntegerField(default=0)
+    new_copies = models.PositiveIntegerField(default=0)
+    used_copies = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.title} by {self.author} (Copies: {self.copies})"

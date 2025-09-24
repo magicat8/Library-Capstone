@@ -59,6 +59,14 @@ class ISBNEntry(models.Model):
 
         super().save(*args, **kwargs)
 
+        def __str__(self):
+            return self.isbn
+
+class customerRequest(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+
     def __str__(self):
-        return self.isbn
+        return f"{self.name} ({self.email})"
+
 

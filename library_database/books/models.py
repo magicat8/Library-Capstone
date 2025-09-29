@@ -65,6 +65,9 @@ class ISBNEntry(models.Model):
 class customerRequest(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
+    date = models.DateField(blank=True, default=None)
+    book_title = models.CharField(max_length=200, null=True, blank=True)
+    isbn = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} ({self.email})"

@@ -1,0 +1,35 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Unsold Books Report</h1>
+<form method="get">
+    <label for="months">Months:</label>
+    <input type="number" id="months" name="months" value="{{ months }}">
+    <button type="submit">Run Report</button>
+</form>
+
+<h2>Books not sold in the last {{ months }} months</h2>
+{% if unsold_books %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre/Category</th>
+                <th>Copies on Hand</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in unsold_books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.categories }}</td>
+                <td>{{ book.copies }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>All books have been sold in the last {{ months }} months.</p>
+{% endif %}
+{% endblock %}

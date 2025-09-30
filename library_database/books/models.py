@@ -22,6 +22,27 @@ class Book(models.Model):
     def __str__(self):
         return f"{self.title} by {self.author} (Copies: {self.copies})"
 
+class Sale(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    sale_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Sold {self.quantity} of {self.book.title} on {self.sale_date}"
+
+    def save(self, *args, **kwargs):
+        if self._state.adding:
+            if self.book.copies < self.quantity:
+                raise ValueError("Not enough copies in stock to complete the sale.")
+            self.book.copies -= self.quantity
+            self.book.save()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.book.copies += self.quantity
+        self.book.save()
+        super().delete(*args, **kwargs)
+
 class ISBNEntry(models.Model):
     isbn = models.CharField(max_length=20, null=False, blank=False)
 

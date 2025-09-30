@@ -9,4 +9,7 @@
 {% endif %}
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+<a href="{% url 'sales_report' %}">Sales Report</a> |
+<a href="{% url 'unsold_books_report' %}">Unsold Books Report</a>
+{% endblock %}

@@ -3,13 +3,20 @@ from django.urls import path
 from django.http import JsonResponse
 import requests
 
-from .models import Book, ISBNEntry, customerRequest
+from .models import Book, ISBNEntry, customerRequest, Sale
 
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'published_year', 'isbn')
     search_fields = ('title', 'author', 'isbn')
+
+
+@admin.register(Sale)
+class SaleAdmin(admin.ModelAdmin):
+    list_display = ('book', 'quantity', 'sale_date')
+    search_fields = ('book__title', 'book__author')
+    list_filter = ('sale_date',)
 
 
 @admin.register(ISBNEntry)

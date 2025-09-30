@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Sales Report</h1>
+<form method="get">
+    <label for="start_date">Start Date:</label>
+    <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
+    <label for="end_date">End Date:</label>
+    <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
+    <button type="submit">Run Report</button>
+</form>
+
+{% if report_data %}
+    <h2>Report from {{ start_date }} to {{ end_date }}</h2>
+    <p>Total books sold: {{ total_sales }}</p>
+    <p>Average turnover rate: {{ total_turnover|floatformat:2 }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Copies on Hand (End of Period)</th>
+                <th>Sold Copies</th>
+                <th>Turnover Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in report_data %}
+            <tr>
+                <td>{{ item.title }}</td>
+                <td>{{ item.author }}</td>
+                <td>{{ item.copies_on_hand }}</td>
+                <td>{{ item.sold_copies }}</td>
+                <td>{{ item.turnover_rate|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No sales data for the selected period.</p>
+{% endif %}
+{% endblock %}

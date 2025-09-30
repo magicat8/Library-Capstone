@@ -36,8 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p><strong>Price:</strong> ${data.price || "N/A"}</p>
                             <p><strong>Copies:</strong> ${data.copies || 0}</p>
                         `;
-                    } else if (data.in_inventory === false) {
-                        inventoryInfo = `<p style="color:orange; font-weight:bold;">⚠️ Not in Inventory</p>`;
                     }
 
                     previewDiv.innerHTML = `
@@ -62,11 +60,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hook up button click
     previewBtn.addEventListener("click", loadPreview);
 
-    // Hook up Enter key to trigger preview instead of form submit
+    // Handle Enter, Shift+Enter, Ctrl+Enter
     isbnInput.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
-            e.preventDefault(); // stop the form from saving
-            loadPreview();
+            if (e.shiftKey) {
+                e.preventDefault();
+                // Save and add another
+                const saveAddAnother = document.querySelector("input[name='_addanother']");
+                if (saveAddAnother) saveAddAnother.click();
+            } else if (e.ctrlKey) {
+                e.preventDefault();
+                // Save
+                const saveBtn = document.querySelector("input[name='_save']");
+                if (saveBtn) saveBtn.click();
+            } else {
+                e.preventDefault();
+                // Default Enter → load preview
+                loadPreview();
+            }
         }
     });
 });

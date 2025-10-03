@@ -1,4 +1,8 @@
 from django.shortcuts import render
+
+def index(request):
+    return render(request, 'books/index.html')
+
 from .models import Book, Sale
 from django.db.models import Sum
 from datetime import datetime, timedelta

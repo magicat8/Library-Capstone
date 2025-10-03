@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     previewDiv.style.marginTop = "15px";
     isbnInput.parentNode.appendChild(previewDiv);
 
-    previewBtn.addEventListener("click", function () {
+    // Function to fetch and show preview
+    function loadPreview() {
         const isbn = isbnInput.value.trim();
         if (!isbn) {
             alert("Please enter an ISBN first.");
@@ -28,6 +29,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.error) {
                     previewDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
                 } else {
+                    let inventoryInfo = "";
+                    if (data.in_inventory) {
+                        inventoryInfo = `
+                            <p style="color:green; font-weight:bold;">✅ Already in Inventory</p>
+                            <p><strong>Price:</strong> ${data.price || "N/A"}</p>
+                            <p><strong>Copies:</strong> ${data.copies || 0}</p>
+                        `;
+                    }
+
                     previewDiv.innerHTML = `
                         <h3>${data.title || "Untitled"}</h3>
                         <p><strong>Author:</strong> ${data.author || "Unknown"}</p>
@@ -36,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p><strong>Pages:</strong> ${data.page_count || ""}</p>
                         <p><strong>Language:</strong> ${data.language || ""}</p>
                         <p><strong>Categories:</strong> ${data.categories || ""}</p>
+                        ${inventoryInfo}
                         <p>${data.description || ""}</p>
                     `;
                 }
@@ -44,5 +55,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error(err);
                 previewDiv.innerHTML = `<p style="color:red;">Error loading book preview.</p>`;
             });
+    }
+
+    // Hook up button click
+    previewBtn.addEventListener("click", loadPreview);
+
+    // Handle Enter, Shift+Enter, Ctrl+Enter
+    isbnInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            if (e.shiftKey) {
+                e.preventDefault();
+                // Save and add another
+                const saveAddAnother = document.querySelector("input[name='_addanother']");
+                if (saveAddAnother) saveAddAnother.click();
+            } else if (e.ctrlKey) {
+                e.preventDefault();
+                // Save
+                const saveBtn = document.querySelector("input[name='_save']");
+                if (saveBtn) saveBtn.click();
+            } else {
+                e.preventDefault();
+                // Default Enter → load preview
+                loadPreview();
+            }
+        }
     });
 });

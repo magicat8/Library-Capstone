@@ -119,10 +119,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# This should point to a project-wide static directory, not one inside the config folder.
-# Django's 'collectstatic' will find app-specific static files (like in your 'books' app) automatically.
-# This is for static files that don't belong to any single app.
-STATICFILES_DIRS = [BASE_DIR.parent / "static"]
+STATICFILES_DIRS = [BASE_DIR / "library_database" / "static"]
 
 # For production (collected static files)
 STATIC_ROOT = BASE_DIR / "staticfiles"

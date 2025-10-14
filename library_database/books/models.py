@@ -3,18 +3,6 @@ import isbnlib
 import requests
 
 class Book(models.Model):
-    CONDITION_CHOICES = [
-        ('new', 'New'),
-        ('like_new', 'Like New'),
-        ('good', 'Good'),
-        ('acceptable', 'Acceptable'),
-    ]
-    TYPE_CHOICES = [
-        ('hardcover', 'Hardcover'),
-        ('paperback', 'Paperback'),
-        ('audiobook', 'Audiobook'),
-    ]
-
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     published_year = models.CharField(max_length=20, blank=True, null=True)
@@ -24,8 +12,6 @@ class Book(models.Model):
     language = models.CharField(max_length=10, blank=True, null=True)
     categories = models.CharField(max_length=200, blank=True, null=True)
     isbn = models.CharField(max_length=20, null=True, blank=True)
-    condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='good')
-    copie_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='hardcover')
     copies = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
@@ -54,20 +40,7 @@ class Sale(models.Model):
         super().delete(*args, **kwargs)
 
 class ISBNEntry(models.Model):
-    CONDITION_CHOICES = [
-        ('new', 'New'),
-        ('like_new', 'Like New'),
-        ('good', 'Good'),
-        ('acceptable', 'Acceptable'),
-    ]
-    TYPE_CHOICES = [
-        ('hardcover', 'Hardcover'),
-        ('paperback', 'Paperback'),
-        ('audiobook', 'Audiobook'),
-    ]
     isbn = models.CharField(max_length=20, null=False, blank=False)
-    condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='good')
-    copie_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='hardcover')
 
     def save(self, *args, **kwargs):
         import isbnlib, requests
@@ -82,9 +55,7 @@ class ISBNEntry(models.Model):
 
                 # Check if the book already exists
                 book, created = Book.objects.get_or_create(
-                    isbn=self.isbn, 
-                    condition=self.condition,
-                    copie_type=self.copie_type,
+                    isbn=self.isbn,
                     defaults={
                         "title": book_info.get("title"),
                         "author": ", ".join(book_info.get("authors", [])) if book_info.get("authors") else "Unknown",
@@ -94,8 +65,6 @@ class ISBNEntry(models.Model):
                         "page_count": book_info.get("pageCount"),
                         "language": book_info.get("language"),
                         "categories": ", ".join(book_info.get("categories", [])) if book_info.get("categories") else None,
-                        "condition": self.condition,
-                        "copie_type": self.copie_type,
                         "copies": 1,
                     }
                 )
@@ -107,8 +76,8 @@ class ISBNEntry(models.Model):
 
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return f"{self.isbn} ({self.get_condition_display()})"
+        def __str__(self):
+            return self.isbn
 
 class customerRequest(models.Model):
     name = models.CharField(max_length=100)
@@ -119,3 +88,5 @@ class customerRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.email})"
+
+

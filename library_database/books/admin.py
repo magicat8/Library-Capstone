@@ -8,9 +8,8 @@ from .models import Book, ISBNEntry, customerRequest, Sale
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'condition', 'published_year', 'isbn', 'copies')
+    list_display = ('title', 'author', 'published_year', 'isbn')
     search_fields = ('title', 'author', 'isbn')
-    list_filter = ('condition', 'published_year', 'isbn')
 
 
 @admin.register(Sale)
@@ -22,7 +21,7 @@ class SaleAdmin(admin.ModelAdmin):
 
 @admin.register(ISBNEntry)
 class ISBNEntryAdmin(admin.ModelAdmin):
-    list_display = ('isbn', 'condition')
+    list_display = ('isbn',)
     search_fields = ('isbn',)
 
     # Include custom JS file
@@ -44,10 +43,9 @@ class ISBNEntryAdmin(admin.ModelAdmin):
     # Handle preview API call
     def preview_book(self, request):
         isbn = request.GET.get("isbn")
-        condition = request.GET.get("condition")
         if not isbn:
             return JsonResponse({"error": "No ISBN provided"}, status=400)
-        
+
         # First check if the book is already in inventory
         try:
             book = Book.objects.get(isbn=isbn)

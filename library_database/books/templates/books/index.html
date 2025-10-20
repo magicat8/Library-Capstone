@@ -8,7 +8,8 @@
     {% load static %}
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <!-- changed: use the 'books' prefix so Django finds the file under books/static/books/css/landing.css -->
+    <link rel="stylesheet" href="{% static 'books/css/landing.css' %}">
 </head>
 <body>
     <!-- Header / Nav -->

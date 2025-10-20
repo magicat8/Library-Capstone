@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from books.views import book_list, sales_report, unsold_books_report, index
 from other.views import other_list
-# Change the "View Site" link to point to the books path
-admin.site.site_url = '../'
+# Change the "View Site" link to point to the root landing page
+admin.site.site_url = '/'
 
 urlpatterns = [
     path('', index, name='index'),

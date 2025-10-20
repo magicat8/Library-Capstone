@@ -3,15 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Library — discover, borrow, and manage books. Modern catalog and admin tools for easy library management.">
     <title>Welcome to the Library</title>
     {% load static %}
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/landing.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Library</h1>
-        <p>Your one-stop place for books and more.</p>
-        <a href="/admin" class="button">Go to Admin Dashboard</a>
-    </div>
+    <!-- Header / Nav -->
+    <header class="site-header">
+        <div class="wrap">
+            <a class="brand" href="/">
+                <!-- Simple text logo -->
+                <span class="logo-mark">📚</span>
+                <span class="brand-name">Library</span>
+            </a>
+            <nav class="main-nav">
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="/admin" class="nav-admin">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <main>
+        <section class="hero">
+            <div class="wrap hero-inner">
+                <div class="hero-copy">
+                    <h1>Discover your next great read</h1>
+                    <p class="sub">Fast catalog search, easy borrowing and powerful admin tools — all in one place.</p>
+                    <div class="cta-group">
+                        <a class="btn btn-primary" href="/books">Browse Catalog</a>
+                        <a class="btn btn-ghost" href="#features">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-card" aria-hidden="true">
+                    <!-- Minimal illustrative card -->
+                    <div class="card">
+                        <div class="card-title">Featured</div>
+                        <div class="card-body">
+                            <strong>Curated Picks</strong>
+                            <p>Explore hand-picked books across fiction, non-fiction and more.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" class="features">
+            <div class="wrap">
+                <h2 class="section-title">What we offer</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🔎</div>
+                        <h3>Easy Search</h3>
+                        <p>Find books quickly with filters, categories and suggestions.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📥</div>
+                        <h3>Borrow & Return</h3>
+                        <p>Streamlined borrowing flow and clear due-date info.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Admin Tools</h3>
+                        <p>Manage inventory, users and reports from a single dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Optional about/contact anchors -->
+        <section id="about" class="info-section">
+            <div class="wrap">
+                <h3>About</h3>
+                <p>We provide a modern, easy-to-use library catalog built for students and staff.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="info-section">
+            <div class="wrap">
+                <h3>Contact</h3>
+                <p>Questions or feedback? Get in touch with your library admin.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>© <span id="year"></span> Library — All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // small script for current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

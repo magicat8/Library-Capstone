@@ -1,27 +1,64 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Library - Book List</title>
+    <link href="{% static 'books/css/book_list.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Library Book List</h1>
-    <ul>
-        {% for book in books %}
-            <li>
-                {% if book.thumbnail_url %}
-                    <img src="{{ book.thumbnail_url }}" alt="{{ book.title }}" width="100">
-                {% endif %}
-                <strong>{{ book.title }}</strong> by {{ book.author }}<br>
-                {% if book.publisher %}Publisher: {{ book.publisher }}<br>{% endif %}
-                {% if book.published_year %}Published: {{ book.published_year }}<br>{% endif %}
-                {% if book.page_count %}Pages: {{ book.page_count }}<br>{% endif %}
-                {% if book.language %}Language: {{ book.language }}<br>{% endif %}
-                {% if book.categories %}Categories: {{ book.categories }}<br>{% endif %}
-                Copies: {{ book.copies }}
-            </li>
-        {% empty %}
-            <li>No books found.</li>
-        {% endfor %}
-    </ul>
+    <header class="site-header">
+        <div class="wrap">
+            <a href="/" class="brand">
+                <span class="logo-mark">📚</span>
+                <span class="brand-name">Library</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <div class="page-header">
+            <h1>Book Collection</h1>
+        </div>
+
+        <div class="book-grid">
+            {% for book in books %}
+                <div class="book-card">
+                    <div class="book-image">
+                        {% if book.thumbnail_url %}
+                            <img src="{{ book.thumbnail_url }}" alt="{{ book.title }}">
+                        {% else %}
+                            <div class="no-image">📖</div>
+                        {% endif %}
+                    </div>
+                    <div class="book-info">
+                        <h2 class="book-title">{{ book.title }}</h2>
+                        <p class="book-author">by {{ book.author }}</p>
+                        
+                        <div class="book-details">
+                            {% if book.publisher %}<p><span>Publisher:</span> {{ book.publisher }}</p>{% endif %}
+                            {% if book.published_year %}<p><span>Published:</span> {{ book.published_year }}</p>{% endif %}
+                            {% if book.page_count %}<p><span>Pages:</span> {{ book.page_count }}</p>{% endif %}
+                            {% if book.language %}<p><span>Language:</span> {{ book.language }}</p>{% endif %}
+                        </div>
+                        
+                        {% if book.categories %}
+                        <div class="book-categories">
+                            <p>{{ book.categories }}</p>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="book-availability">
+                            <p class="copies">{{ book.copies }} copies available</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="no-books">
+                    <p>No books found in the collection.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
 </body>
 </html>

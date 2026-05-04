@@ -85,8 +85,12 @@ A comprehensive Django-based library database management system designed for sen
    ```bash
    python manage.py runserver
    ```
+   if using production server use
+   ```bash
+   gunicorn --bind 0.0.0.0:8000 --workers 3 library_database.wsgi:application &
+   ```
 
-8. **Access the application**
+9. **Access the application**
    - Website: http://localhost:8000
    - Admin Panel: http://localhost:8000/admin
 
